@@ -39,6 +39,8 @@ def create_app():
     return app
 
 
+# Create the Flask application instance at the module level
+app = create_app()
+
 if __name__ == "__main__":
-    app = create_app()
     app.run(debug=True)
