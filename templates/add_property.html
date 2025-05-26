@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}Add Property - Real Estate{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="max-w-3xl mx-auto">
+        <h1 class="text-3xl font-bold text-gray-900 mb-8">Add New Property</h1>
+
+        <form method="POST" action="{{ url_for('main.add_property') }}" class="bg-white rounded-lg shadow-md p-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Basic Information -->
+                <div class="md:col-span-2">
+                    <h2 class="text-xl font-semibold mb-4">Basic Information</h2>
+                </div>
+
+                <div class="md:col-span-2">
+                    <label for="title" class="block text-sm font-medium text-gray-700 mb-2">Property Title</label>
+                    <input type="text" id="title" name="title" required class="form-control w-full"
+                        placeholder="Enter property title">
+                </div>
+
+                <div class="md:col-span-2">
+                    <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                    <textarea id="description" name="description" required rows="4" class="form-control w-full"
+                        placeholder="Enter property description"></textarea>
+                </div>
+
+                <!-- Property Details -->
+                <div class="md:col-span-2">
+                    <h2 class="text-xl font-semibold mb-4">Property Details</h2>
+                </div>
+
+                <div>
+                    <label for="price" class="block text-sm font-medium text-gray-700 mb-2">Price ($)</label>
+                    <input type="number" id="price" name="price" required min="0" step="0.01"
+                        class="form-control w-full" placeholder="Enter price">
+                </div>
+
+                <div>
+                    <label for="property_type" class="block text-sm font-medium text-gray-700 mb-2">Property
+                        Type</label>
+                    <select id="property_type" name="property_type" required class="form-select w-full">
+                        <option value="">Select type</option>
+                        <option value="house">House</option>
+                        <option value="apartment">Apartment</option>
+                        <option value="villa">Villa</option>
+                        <option value="condo">Condo</option>
+                        <option value="plot">Plot</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="bedrooms" class="block text-sm font-medium text-gray-700 mb-2">Bedrooms</label>
+                    <input type="number" id="bedrooms" name="bedrooms" required min="0" class="form-control w-full"
+                        placeholder="Number of bedrooms">
+                </div>
+
+                <div>
+                    <label for="bathrooms" class="block text-sm font-medium text-gray-700 mb-2">Bathrooms</label>
+                    <input type="number" id="bathrooms" name="bathrooms" required min="0" class="form-control w-full"
+                        placeholder="Number of bathrooms">
+                </div>
+
+                <div>
+                    <label for="area" class="block text-sm font-medium text-gray-700 mb-2">Area (sqft)</label>
+                    <input type="number" id="area" name="area" required min="0" class="form-control w-full"
+                        placeholder="Property area">
+                </div>
+
+                <div>
+                    <label for="location" class="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                    <input type="text" id="location" name="location" required class="form-control w-full"
+                        placeholder="Enter property location">
+                </div>
+
+                <div class="md:col-span-2">
+                    <label for="image_url" class="block text-sm font-medium text-gray-700 mb-2">Image URL</label>
+                    <input type="url" id="image_url" name="image_url" class="form-control w-full"
+                        placeholder="Enter image URL">
+                    <p class="mt-1 text-sm text-gray-500">Leave empty to use a placeholder image</p>
+                </div>
+            </div>
+
+            <div class="mt-8 flex justify-end">
+                <button type="submit" class="btn btn-primary">Add Property</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

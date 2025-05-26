@@ -1,0 +1,419 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome to Real Estate{% endblock %}
+
+{% block content %}
+<!-- Hero Section with Slider -->
+<div class="relative h-[600px] overflow-hidden">
+    <div class="swiper-container h-full">
+        <div class="swiper-wrapper">
+            <!-- Slide 1 -->
+            <div class="swiper-slide relative">
+                <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80"
+                    alt="Luxury Home" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40 flex items-center">
+                    <div class="container mx-auto px-4">
+                        <div class="max-w-2xl">
+                            <h1 class="text-5xl font-bold text-white mb-4 animate-fade-in">Find Your Dream Home</h1>
+                            <p class="text-xl text-white/90 mb-8 animate-fade-in-delay">Discover the perfect property
+                                that matches your lifestyle</p>
+                            <div class="flex gap-4 animate-fade-in-delay-2">
+                                <a href="{{ url_for('main.home') }}"
+                                    class="btn btn-primary btn-lg hover:scale-105 transition-transform">Explore
+                                    Properties</a>
+                                <a href="{{ url_for('main.contact') }}"
+                                    class="btn btn-outline-light btn-lg hover:scale-105 transition-transform">Contact
+                                    Us</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="swiper-slide relative">
+                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                    alt="Modern Apartment" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40 flex items-center">
+                    <div class="container mx-auto px-4">
+                        <div class="max-w-2xl">
+                            <h1 class="text-5xl font-bold text-white mb-4 animate-fade-in">Modern Living Spaces</h1>
+                            <p class="text-xl text-white/90 mb-8 animate-fade-in-delay">Experience luxury and comfort in
+                                every detail</p>
+                            <div class="flex gap-4 animate-fade-in-delay-2">
+                                <a href="{{ url_for('main.home') }}"
+                                    class="btn btn-primary btn-lg hover:scale-105 transition-transform">View
+                                    Listings</a>
+                                <a href="{{ url_for('main.about') }}"
+                                    class="btn btn-outline-light btn-lg hover:scale-105 transition-transform">Learn
+                                    More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="swiper-slide relative">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                    alt="Luxury Villa" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40 flex items-center">
+                    <div class="container mx-auto px-4">
+                        <div class="max-w-2xl">
+                            <h1 class="text-5xl font-bold text-white mb-4 animate-fade-in">Premium Properties</h1>
+                            <p class="text-xl text-white/90 mb-8 animate-fade-in-delay">Your journey to finding the
+                                perfect home starts here</p>
+                            <div class="flex gap-4 animate-fade-in-delay-2">
+                                <a href="{{ url_for('auth.register') }}"
+                                    class="btn btn-primary btn-lg hover:scale-105 transition-transform">Get Started</a>
+                                <a href="{{ url_for('main.contact') }}"
+                                    class="btn btn-outline-light btn-lg hover:scale-105 transition-transform">Schedule a
+                                    Tour</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+</div>
+
+<!-- Quick Search Section -->
+<div class="bg-white py-8 shadow-lg relative z-10 -mt-8">
+    <div class="container mx-auto px-4">
+        <div class="bg-white rounded-lg shadow-xl p-6">
+            <form class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                    <input type="text" name="location" class="form-control" placeholder="Enter location"
+                        value="{{ request.args.get('location', '') }}">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Property Type</label>
+                    <select name="property_type" class="form-select">
+                        <option value="">All Types</option>
+                        <option value="house" {% if request.args.get('property_type')=='house' %}selected{% endif %}>
+                            House</option>
+                        <option value="apartment" {% if request.args.get('property_type')=='apartment' %}selected{%
+                            endif %}>Apartment</option>
+                        <option value="villa" {% if request.args.get('property_type')=='villa' %}selected{% endif %}>
+                            Villa</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Price Range</label>
+                    <select name="price_range" class="form-select">
+                        <option value="">Any Price</option>
+                        <option value="0-100000" {% if request.args.get('price_range')=='0-100000' %}selected{% endif
+                            %}>$0 - $100,000</option>
+                        <option value="100000-300000" {% if request.args.get('price_range')=='100000-300000'
+                            %}selected{% endif %}>$100,000 - $300,000</option>
+                        <option value="300000-500000" {% if request.args.get('price_range')=='300000-500000'
+                            %}selected{% endif %}>$300,000 - $500,000</option>
+                        <option value="500000+" {% if request.args.get('price_range')=='500000+' %}selected{% endif %}>
+                            $500,000+</option>
+                    </select>
+                </div>
+                <div class="flex items-end">
+                    <button type="submit" class="btn btn-primary w-full text-lg py-3">Search Properties</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="py-16 bg-white relative overflow-hidden">
+    <!-- Background Image -->
+    <div
+        class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80')] bg-cover bg-center opacity-10">
+    </div>
+    <!-- Pattern Overlay -->
+    <div
+        class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxNCAwIDYtMi42ODYgNi02cy0yLjY4Ni02LTYtNi02IDIuNjg2LTYgNiAyLjY4NiA2IDYgNnptMCAyYzQuNDE4IDAgOC0zLjU4MiA4LThzLTMuNTgyLTgtOC04LTggMy41ODItOCA4IDMuNTgyIDggOCA4em0wIDJjLTUuNTIzIDAtMTAgNC40NzctMTAgMTBzNC40NzcgMTAgMTAgMTAgMTAtNC40NzcgMTAtMTAtNC40NzctMTAtMTAtMTB6IiBmaWxsPSIjMDAwIiBmaWxsLW9wYWNpdHk9Ii4wMiIvPjwvZz48L3N2Zz4=')] opacity-30">
+    </div>
+    <!-- Gradient Overlay -->
+    <div class="absolute inset-0 bg-gradient-to-br from-white/90 via-white/80 to-white/90"></div>
+    <div class="container mx-auto px-4 relative">
+        <h2 class="text-3xl font-bold text-center mb-12">Why Choose Us</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div
+                class="text-center p-8 bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
+                <div
+                    class="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                    <i class="fas fa-home text-3xl text-white"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-4 text-gray-800">Wide Range of Properties</h3>
+                <p class="text-gray-600 leading-relaxed">Find your perfect match from our extensive collection of
+                    properties</p>
+            </div>
+            <div
+                class="text-center p-8 bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
+                <div
+                    class="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                    <i class="fas fa-shield-alt text-3xl text-white"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-4 text-gray-800">Trusted & Secure</h3>
+                <p class="text-gray-600 leading-relaxed">Your security and trust are our top priorities</p>
+            </div>
+            <div
+                class="text-center p-8 bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
+                <div
+                    class="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                    <i class="fas fa-headset text-3xl text-white"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-4 text-gray-800">24/7 Support</h3>
+                <p class="text-gray-600 leading-relaxed">Our dedicated team is always here to help you</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Featured Properties Section -->
+<div class="py-16 bg-gray-50 relative overflow-hidden">
+    <!-- Background Image -->
+    <div
+        class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')] bg-cover bg-center opacity-5">
+    </div>
+    <!-- Pattern Overlay -->
+    <div
+        class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxNCAwIDYtMi42ODYgNi02cy0yLjY4Ni02LTYtNi02IDIuNjg2LTYgNiAyLjY4NiA2IDYgNnptMCAyYzQuNDE4IDAgOC0zLjU4MiA4LThzLTMuNTgyLTgtOC04LTggMy41ODItOCA4IDMuNTgyIDggOCA4em0wIDJjLTUuNTIzIDAtMTAgNC40NzctMTAgMTBzNC40NzcgMTAgMTAgMTAgMTAtNC40NzcgMTAtMTAtNC40NzctMTAtMTAtMTB6IiBmaWxsPSIjMDAwIiBmaWxsLW9wYWNpdHk9Ii4wMiIvPjwvZz48L3N2Zz4=')] opacity-20">
+    </div>
+    <!-- Gradient Overlay -->
+    <div class="absolute inset-0 bg-gradient-to-br from-gray-50/95 via-gray-50/90 to-gray-50/95"></div>
+    <!-- Decorative Elements -->
+    <div
+        class="absolute top-0 left-0 w-96 h-96 bg-blue-400/5 rounded-full filter blur-3xl -translate-x-1/2 -translate-y-1/2">
+    </div>
+    <div
+        class="absolute bottom-0 right-0 w-96 h-96 bg-blue-400/5 rounded-full filter blur-3xl translate-x-1/2 translate-y-1/2">
+    </div>
+    <div class="container mx-auto px-4 relative">
+        <h2 class="text-3xl font-bold text-center mb-12">Featured Properties</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {% for property in properties[:3] %}
+            <div
+                class="bg-white rounded-xl shadow-lg overflow-hidden property-card transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 group">
+                <div class="relative h-56">
+                    <img src="{{ property.display_image }}" alt="{{ property.title }}"
+                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div
+                        class="absolute top-4 right-4 bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">
+                        {{ property.property_type }}
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+                        <p class="text-white text-2xl font-bold">${{ "{:,.2f}".format(property.price) }}</p>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">{{
+                        property.title }}</h3>
+                    <div class="flex items-center text-gray-600 mb-4 space-x-4">
+                        <span class="flex items-center"><i class="fas fa-bed mr-2 text-blue-500"></i> {{
+                            property.bedrooms }} beds</span>
+                        <span class="flex items-center"><i class="fas fa-bath mr-2 text-blue-500"></i> {{
+                            property.bathrooms }} baths</span>
+                        <span class="flex items-center"><i class="fas fa-ruler-combined mr-2 text-blue-500"></i> {{
+                            property.area }} sqft</span>
+                    </div>
+                    <p class="text-gray-600 mb-6 flex items-center"><i
+                            class="fas fa-map-marker-alt mr-2 text-blue-500"></i>{{ property.location }}</p>
+                    <a href="{{ url_for('main.property_detail', property_id=property.id) }}"
+                        class="block w-full py-3 px-4 text-center bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors duration-300 shadow-md hover:shadow-lg">
+                        View Details
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-12">
+            <a href="{{ url_for('main.home') }}"
+                class="inline-block px-8 py-3 bg-white text-blue-600 rounded-lg font-medium hover:bg-blue-50 transition-colors duration-300 shadow-md hover:shadow-lg border border-blue-600">
+                View All Properties
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Statistics Section -->
+<div class="py-16 bg-blue-600 text-white">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+            <div class="transform transition-transform duration-300 hover:scale-105">
+                <div class="text-4xl font-bold mb-2">500+</div>
+                <p class="text-blue-100">Properties Listed</p>
+            </div>
+            <div class="transform transition-transform duration-300 hover:scale-105">
+                <div class="text-4xl font-bold mb-2">1000+</div>
+                <p class="text-blue-100">Happy Clients</p>
+            </div>
+            <div class="transform transition-transform duration-300 hover:scale-105">
+                <div class="text-4xl font-bold mb-2">50+</div>
+                <p class="text-blue-100">Expert Agents</p>
+            </div>
+            <div class="transform transition-transform duration-300 hover:scale-105">
+                <div class="text-4xl font-bold mb-2">15+</div>
+                <p class="text-blue-100">Years Experience</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Testimonials Section -->
+<div class="py-16 bg-white relative">
+    <div
+        class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1557683316-973673baf926?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2029&q=80')] opacity-5">
+    </div>
+    <div class="container mx-auto px-4 relative">
+        <h2 class="text-3xl font-bold text-center mb-12">What Our Clients Say</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div
+                class="bg-white p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
+                <div class="flex items-center mb-4">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
+                        alt="Client" class="w-12 h-12 rounded-full object-cover mr-4">
+                    <div>
+                        <h4 class="font-semibold">Sarah Johnson</h4>
+                        <p class="text-gray-600 text-sm">Home Buyer</p>
+                    </div>
+                </div>
+                <p class="text-gray-600">"Found my dream home through this platform. The process was smooth and
+                    professional."</p>
+            </div>
+            <div
+                class="bg-white p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
+                <div class="flex items-center mb-4">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
+                        alt="Client" class="w-12 h-12 rounded-full object-cover mr-4">
+                    <div>
+                        <h4 class="font-semibold">Michael Chen</h4>
+                        <p class="text-gray-600 text-sm">Property Seller</p>
+                    </div>
+                </div>
+                <p class="text-gray-600">"Great experience selling my property. The team was very helpful throughout."
+                </p>
+            </div>
+            <div
+                class="bg-white p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
+                <div class="flex items-center mb-4">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                        alt="Client" class="w-12 h-12 rounded-full object-cover mr-4">
+                    <div>
+                        <h4 class="font-semibold">Emily Rodriguez</h4>
+                        <p class="text-gray-600 text-sm">Real Estate Investor</p>
+                    </div>
+                </div>
+                <p class="text-gray-600">"The best platform for real estate investment. Highly recommended!"</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Call to Action Section -->
+<div class="py-16 bg-blue-600 text-white relative">
+    <div
+        class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80')] opacity-10">
+    </div>
+    <div class="container mx-auto px-4 text-center relative">
+        <h2 class="text-3xl font-bold mb-4">Ready to Find Your Dream Home?</h2>
+        <p class="text-xl mb-8">Join thousands of satisfied customers who found their perfect property with us</p>
+        <div class="flex justify-center gap-4">
+            <a href="{{ url_for('auth.register') }}"
+                class="btn btn-light btn-lg hover:bg-gray-100 transition-colors">Get Started</a>
+            <a href="{{ url_for('main.home') }}"
+                class="btn btn-outline-light btn-lg hover:bg-white/10 transition-colors">Browse Properties</a>
+        </div>
+    </div>
+</div>
+
+{% block extra_css %}
+<style>
+    .animate-fade-in {
+        animation: fadeIn 1s ease-out;
+    }
+
+    .animate-fade-in-delay {
+        animation: fadeIn 1s ease-out 0.3s both;
+    }
+
+    .animate-fade-in-delay-2 {
+        animation: fadeIn 1s ease-out 0.6s both;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Add smooth background transitions */
+    .bg-gradient-to-br {
+        transition: all 0.5s ease-in-out;
+    }
+
+    /* Add subtle animation to decorative elements */
+    @keyframes float {
+        0% {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        50% {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        100% {
+            transform: translate(-50%, -50%) scale(1);
+        }
+    }
+
+    .bg-blue-400\/5 {
+        animation: float 8s ease-in-out infinite;
+    }
+
+    /* Add parallax effect to background images */
+    .bg-cover {
+        transition: transform 0.5s ease-out;
+    }
+
+    .relative:hover .bg-cover {
+        transform: scale(1.05);
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Swiper JS -->
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        new Swiper('.swiper-container', {
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            effect: 'fade',
+            fadeEffect: {
+                crossFade: true
+            }
+        });
+    });
+</script>
+{% endblock %}
+{% endblock %}
