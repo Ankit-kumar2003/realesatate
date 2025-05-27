@@ -8,6 +8,17 @@ from routes.main import main_bp
 from routes.admin import admin_bp
 from models.database import db, User
 from commands import create_admin
+import logging
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    handlers=[logging.FileHandler("app.log"), logging.StreamHandler()],
+)
+
+# Create a logger
+logger = logging.getLogger(__name__)
 
 
 def create_app():
@@ -35,6 +46,16 @@ def create_app():
     # Create database tables
     with app.app_context():
         db.create_all()
+
+    # Log database connection events
+    @app.before_request
+    def before_request():
+        logger.info("Connecting to database...")
+
+    @app.after_request
+    def after_request(response):
+        logger.info("Database connection closed.")
+        return response
 
     return app
 
