@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Viewing Requests - Admin{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold">Manage Viewing Requests</h1>
+        <a href="{{ url_for('admin.dashboard') }}" class="btn btn-outline-primary">
+            <i class="fas fa-arrow-left mr-2"></i>Back to Dashboard
+        </a>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="overflow-x-auto">
+            <table class="min-w-full">
+                <thead>
+                    <tr class="bg-gray-50">
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Property</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Contact</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date
+                            & Time</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Status</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for viewing in viewings %}
+                    <tr class="border-t">
+                        <td class="px-6 py-4">
+                            <a href="{{ url_for('main.property_detail', property_id=viewing.property.id) }}"
+                                class="text-blue-600 hover:text-blue-900">
+                                {{ viewing.property.title }}
+                            </a>
+                        </td>
+                        <td class="px-6 py-4">{{ viewing.name }}</td>
+                        <td class="px-6 py-4">
+                            <div>Email: {{ viewing.email }}</div>
+                            <div>Phone: {{ viewing.phone }}</div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div>Date: {{ viewing.preferred_date.strftime('%Y-%m-%d') }}</div>
+                            <div>Time: {{ viewing.preferred_time }}</div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="px-2 py-1 rounded-full text-xs font-medium
+                                {% if viewing.status == 'pending' %}
+                                    bg-yellow-100 text-yellow-800
+                                {% elif viewing.status == 'approved' %}
+                                    bg-green-100 text-green-800
+                                {% else %}
+                                    bg-red-100 text-red-800
+                                {% endif %}">
+                                {{ viewing.status|title }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex space-x-2">
+                                <form action="{{ url_for('admin.update_viewing_status', viewing_id=viewing.id) }}"
+                                    method="POST" class="inline">
+                                    <select name="status" onchange="this.form.submit()" class="form-select text-sm">
+                                        <option value="pending" {% if viewing.status=='pending' %}selected{% endif %}>
+                                            Pending</option>
+                                        <option value="approved" {% if viewing.status=='approved' %}selected{% endif %}>
+                                            Approved</option>
+                                        <option value="rejected" {% if viewing.status=='rejected' %}selected{% endif %}>
+                                            Rejected</option>
+                                    </select>
+                                </form>
+                                <form action="{{ url_for('admin.delete_viewing', viewing_id=viewing.id) }}"
+                                    method="POST" class="inline">
+                                    <button type="submit" class="text-red-600 hover:text-red-900"
+                                        onclick="return confirm('Are you sure you want to delete this viewing request?')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

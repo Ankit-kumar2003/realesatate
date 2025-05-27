@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
-from models.database import db, Property, User, ContactMessage
+from models.database import db, Property, User, ContactMessage, PropertyViewing
 from functools import wraps
 
 admin_bp = Blueprint("admin", __name__, url_prefix="/admin")
@@ -28,6 +28,9 @@ def dashboard():
         Property.query.order_by(Property.created_at.desc()).limit(5).all()
     )
     recent_users = User.query.order_by(User.created_at.desc()).limit(5).all()
+    recent_viewings = (
+        PropertyViewing.query.order_by(PropertyViewing.created_at.desc()).limit(5).all()
+    )
     return render_template(
         "admin/dashboard.html",
         total_properties=total_properties,
@@ -35,6 +38,7 @@ def dashboard():
         total_messages=total_messages,
         recent_properties=recent_properties,
         recent_users=recent_users,
+        recent_viewings=recent_viewings,
     )
 
 
@@ -115,3 +119,39 @@ def delete_message(message_id):
     db.session.commit()
     flash("Message deleted successfully.", "success")
     return redirect(url_for("admin.messages"))
+
+
+@admin_bp.route("/viewings")
+@login_required
+@admin_required
+def viewings():
+    viewings = PropertyViewing.query.order_by(PropertyViewing.created_at.desc()).all()
+    return render_template("admin/viewings.html", viewings=viewings)
+
+
+@admin_bp.route("/viewing/<int:viewing_id>/update-status", methods=["POST"])
+@login_required
+@admin_required
+def update_viewing_status(viewing_id):
+    viewing = PropertyViewing.query.get_or_404(viewing_id)
+    status = request.form.get("status")
+
+    if status in ["pending", "approved", "rejected"]:
+        viewing.status = status
+        db.session.commit()
+        flash(f"Viewing request has been {status}.", "success")
+    else:
+        flash("Invalid status.", "error")
+
+    return redirect(url_for("admin.viewings"))
+
+
+@admin_bp.route("/viewing/<int:viewing_id>/delete", methods=["POST"])
+@login_required
+@admin_required
+def delete_viewing(viewing_id):
+    viewing = PropertyViewing.query.get_or_404(viewing_id)
+    db.session.delete(viewing)
+    db.session.commit()
+    flash("Viewing request has been deleted.", "success")
+    return redirect(url_for("admin.viewings"))

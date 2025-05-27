@@ -58,35 +58,81 @@
             <!-- Contact Section -->
             <div class="bg-gray-50 p-6 rounded-lg">
                 <h2 class="text-xl font-semibold mb-4">Interested in this property?</h2>
-                <form method="POST" action="{{ url_for('main.contact_agent', property_id=property.id) }}"
-                    class="space-y-4">
-                    <div>
-                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
-                        <input type="text" id="name" name="name" required class="form-control w-full"
-                            placeholder="Enter your name">
-                    </div>
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Your Email</label>
-                        <input type="email" id="email" name="email" required class="form-control w-full"
-                            placeholder="Enter your email">
-                    </div>
-                    <div>
-                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                        <input type="tel" id="phone" name="phone" required class="form-control w-full"
-                            placeholder="Enter your phone number">
-                    </div>
-                    <div>
-                        <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
-                        <textarea id="message" name="message" required rows="4" class="form-control w-full"
-                            placeholder="Enter your message"></textarea>
-                    </div>
-                    <div class="flex flex-col md:flex-row gap-4">
-                        <button type="submit" class="btn btn-primary flex-1">Contact Agent</button>
-                        <button type="button" class="btn btn-outline-primary flex-1">
-                            Schedule a Viewing
-                        </button>
-                    </div>
-                </form>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Contact Owner Form -->
+                    <form method="POST" action="{{ url_for('main.contact_agent', property_id=property.id) }}"
+                        class="space-y-4">
+                        <h3 class="text-lg font-medium mb-4">Contact Property Owner</h3>
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
+                            <input type="text" id="name" name="name" required class="form-control w-full"
+                                placeholder="Enter your name">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Your Email</label>
+                            <input type="email" id="email" name="email" required class="form-control w-full"
+                                placeholder="Enter your email">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required class="form-control w-full"
+                                placeholder="Enter your phone number">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                            <textarea id="message" name="message" required rows="4" class="form-control w-full"
+                                placeholder="Enter your message"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-full">Contact Owner</button>
+                    </form>
+
+                    <!-- Schedule Viewing Form -->
+                    <form method="POST" action="{{ url_for('main.schedule_viewing', property_id=property.id) }}"
+                        class="space-y-4">
+                        <h3 class="text-lg font-medium mb-4">Schedule a Viewing</h3>
+                        <div>
+                            <label for="viewing_name" class="block text-sm font-medium text-gray-700 mb-1">Your
+                                Name</label>
+                            <input type="text" id="viewing_name" name="name" required class="form-control w-full"
+                                placeholder="Enter your name">
+                        </div>
+                        <div>
+                            <label for="viewing_email" class="block text-sm font-medium text-gray-700 mb-1">Your
+                                Email</label>
+                            <input type="email" id="viewing_email" name="email" required class="form-control w-full"
+                                placeholder="Enter your email">
+                        </div>
+                        <div>
+                            <label for="viewing_phone" class="block text-sm font-medium text-gray-700 mb-1">Phone
+                                Number</label>
+                            <input type="tel" id="viewing_phone" name="phone" required class="form-control w-full"
+                                placeholder="Enter your phone number">
+                        </div>
+                        <div>
+                            <label for="preferred_date" class="block text-sm font-medium text-gray-700 mb-1">Preferred
+                                Date</label>
+                            <input type="date" id="preferred_date" name="preferred_date" required
+                                class="form-control w-full" min="{{ now.strftime('%Y-%m-%d') }}">
+                        </div>
+                        <div>
+                            <label for="preferred_time" class="block text-sm font-medium text-gray-700 mb-1">Preferred
+                                Time</label>
+                            <select id="preferred_time" name="preferred_time" required class="form-select w-full">
+                                <option value="">Select a time</option>
+                                <option value="Morning (9AM - 12PM)">Morning (9AM - 12PM)</option>
+                                <option value="Afternoon (12PM - 4PM)">Afternoon (12PM - 4PM)</option>
+                                <option value="Evening (4PM - 7PM)">Evening (4PM - 7PM)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="viewing_message" class="block text-sm font-medium text-gray-700 mb-1">Additional
+                                Notes</label>
+                            <textarea id="viewing_message" name="message" rows="4" class="form-control w-full"
+                                placeholder="Any specific requirements or questions?"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-full">Schedule Viewing</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

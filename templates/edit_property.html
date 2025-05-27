@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Property{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-2xl mx-auto">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold">Edit Property</h1>
+            <a href="{{ url_for('main.user_dashboard') }}" class="btn btn-outline-primary">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Dashboard
+            </a>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <form method="POST" class="space-y-6">
+                <div>
+                    <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Property Title</label>
+                    <input type="text" id="title" name="title" value="{{ property.title }}" required
+                        class="form-control w-full" placeholder="Enter property title">
+                </div>
+
+                <div>
+                    <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                    <textarea id="description" name="description" required rows="4" class="form-control w-full"
+                        placeholder="Enter property description">{{ property.description }}</textarea>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="price" class="block text-sm font-medium text-gray-700 mb-1">Price ($)</label>
+                        <input type="number" id="price" name="price" value="{{ property.price }}" required
+                            class="form-control w-full" placeholder="Enter price" step="0.01">
+                    </div>
+
+                    <div>
+                        <label for="location" class="block text-sm font-medium text-gray-700 mb-1">Location</label>
+                        <input type="text" id="location" name="location" value="{{ property.location }}" required
+                            class="form-control w-full" placeholder="Enter location">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="property_type" class="block text-sm font-medium text-gray-700 mb-1">Property
+                            Type</label>
+                        <select id="property_type" name="property_type" required class="form-select w-full">
+                            <option value="House" {% if property.property_type=='House' %}selected{% endif %}>House
+                            </option>
+                            <option value="Apartment" {% if property.property_type=='Apartment' %}selected{% endif %}>
+                                Apartment</option>
+                            <option value="Villa" {% if property.property_type=='Villa' %}selected{% endif %}>Villa
+                            </option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="area" class="block text-sm font-medium text-gray-700 mb-1">Area (sqft)</label>
+                        <input type="number" id="area" name="area" value="{{ property.area }}" required
+                            class="form-control w-full" placeholder="Enter area" step="0.01">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="bedrooms" class="block text-sm font-medium text-gray-700 mb-1">Bedrooms</label>
+                        <input type="number" id="bedrooms" name="bedrooms" value="{{ property.bedrooms }}" required
+                            class="form-control w-full" placeholder="Enter number of bedrooms">
+                    </div>
+
+                    <div>
+                        <label for="bathrooms" class="block text-sm font-medium text-gray-700 mb-1">Bathrooms</label>
+                        <input type="number" id="bathrooms" name="bathrooms" value="{{ property.bathrooms }}" required
+                            class="form-control w-full" placeholder="Enter number of bathrooms">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="image_url" class="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
+                    <input type="url" id="image_url" name="image_url" value="{{ property.image_url }}" required
+                        class="form-control w-full" placeholder="Enter image URL">
+                </div>
+
+                <div class="flex justify-end space-x-4">
+                    <a href="{{ url_for('main.user_dashboard') }}" class="btn btn-outline-primary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Update Property</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

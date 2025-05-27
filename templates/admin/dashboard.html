@@ -78,51 +78,41 @@
 
         <div class="bg-white rounded-lg shadow-md p-6">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-bold">Recent Users</h2>
-                <a href="{{ url_for('admin.users') }}" class="text-primary hover:text-primary-dark">View All</a>
+                <h2 class="text-xl font-bold">Recent Viewing Requests</h2>
+                <a href="{{ url_for('admin.viewings') }}" class="text-primary hover:text-primary-dark">View All</a>
             </div>
             <div class="overflow-x-auto">
                 <table class="min-w-full">
                     <thead>
                         <tr>
+                            <th class="px-4 py-2 text-left">Property</th>
                             <th class="px-4 py-2 text-left">Name</th>
-                            <th class="px-4 py-2 text-left">Email</th>
-                            <th class="px-4 py-2 text-left">Role</th>
-                            <th class="px-4 py-2 text-left">Actions</th>
+                            <th class="px-4 py-2 text-left">Date</th>
+                            <th class="px-4 py-2 text-left">Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for user in recent_users %}
+                        {% for viewing in recent_viewings %}
                         <tr>
-                            <td class="px-4 py-2">{{ user.name }}</td>
-                            <td class="px-4 py-2">{{ user.email }}</td>
                             <td class="px-4 py-2">
-                                {% if user.is_admin %}
-                                <span class="px-2 py-1 bg-primary text-white rounded-full text-sm">Admin</span>
-                                {% else %}
-                                <span class="px-2 py-1 bg-gray-200 text-gray-700 rounded-full text-sm">User</span>
-                                {% endif %}
+                                <a href="{{ url_for('main.property_detail', property_id=viewing.property.id) }}"
+                                    class="text-primary hover:text-primary-dark">
+                                    {{ viewing.property.title }}
+                                </a>
                             </td>
+                            <td class="px-4 py-2">{{ viewing.name }}</td>
+                            <td class="px-4 py-2">{{ viewing.preferred_date.strftime('%Y-%m-%d') }}</td>
                             <td class="px-4 py-2">
-                                {% if user.id != current_user.id %}
-                                <form action="{{ url_for('admin.toggle_admin', user_id=user.id) }}" method="POST"
-                                    class="inline">
-                                    <button type="submit" class="text-primary hover:text-primary-dark mr-2">
-                                        {% if user.is_admin %}
-                                        <i class="fas fa-user-minus"></i>
-                                        {% else %}
-                                        <i class="fas fa-user-plus"></i>
-                                        {% endif %}
-                                    </button>
-                                </form>
-                                <form action="{{ url_for('admin.delete_user', user_id=user.id) }}" method="POST"
-                                    class="inline">
-                                    <button type="submit" class="text-danger hover:text-danger-dark"
-                                        onclick="return confirm('Are you sure you want to delete this user?')">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
-                                {% endif %}
+                                <span class="px-2 py-1 rounded-full text-xs font-medium
+                                    {% if viewing.status == 'pending' %}
+                                        bg-yellow-100 text-yellow-800
+                                    {% elif viewing.status == 'approved' %}
+                                        bg-green-100 text-green-800
+                                    {% else %}
+                                        bg-red-100 text-red-800
+                                    {% endif %}">
+                                    {{ viewing.status|title }}
+                                </span>
                             </td>
                         </tr>
                         {% endfor %}
