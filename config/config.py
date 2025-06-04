@@ -1,12 +1,16 @@
 import os
+from dotenv import load_dotenv
 
+# Load environment variables
+load_dotenv()
 
 class Config:
     SECRET_KEY = os.environ.get("SECRET_KEY") or os.urandom(24)
-    # Use DATABASE_URL environment variable provided by Render
-    SQLALCHEMY_DATABASE_URI = (
-        os.environ.get("DATABASE_URL") or "sqlite:///realestate.db"
-    )
+    # PostgreSQL database URL
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
+    if not SQLALCHEMY_DATABASE_URI:
+        raise ValueError("No DATABASE_URL environment variable set")
+
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     # Flask-WTF requires a secret key to protect against CSRF attacks
     WTF_CSRF_ENABLED = True

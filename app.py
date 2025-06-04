@@ -9,6 +9,11 @@ from routes.admin import admin_bp
 from models.database import db, User
 from commands import create_admin
 import logging
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Configure logging
 logging.basicConfig(
