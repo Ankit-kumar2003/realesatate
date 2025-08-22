@@ -25,6 +25,13 @@
             </div>
         </form>
 
+        <div class="mt-6">
+            <a href="{{ url_for('auth.google_login') }}" class="btn btn-secondary w-full flex items-center justify-center gap-2">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" class="h-5 w-5"/>
+                Continue with Google
+            </a>
+        </div>
+
         <div class="mt-6 text-center">
             <p class="text-gray-600">
                 Don't have an account?

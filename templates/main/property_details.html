@@ -1,0 +1,291 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Image Gallery -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body p-0">
+                    <div class="property-gallery">
+                        <div class="main-image">
+                            <img src="{{ property.image_url }}" alt="{{ property.title }}" class="img-fluid">
+                        </div>
+                        <div class="thumbnail-images">
+                            {% for image in property.images %}
+                            <div class="thumbnail">
+                                <img src="{{ image.url }}" alt="{{ property.title }}" class="img-fluid">
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Property Details -->
+        <div class="col-12 col-lg-8">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-4">
+                        <div>
+                            <h1 class="h2 mb-2">{{ property.title }}</h1>
+                            <p class="text-muted mb-0">
+                                <i class="fas fa-map-marker-alt me-2"></i>{{ property.location }}
+                            </p>
+                        </div>
+                        <div class="text-end">
+                            <h2 class="h3 text-primary mb-0">${{ property.price }}</h2>
+                            <small class="text-muted">For {{ property.status }}</small>
+                        </div>
+                    </div>
+
+                    <!-- Property Features -->
+                    <div class="property-features mb-4">
+                        <div class="row g-3">
+                            <div class="col-6 col-md-3">
+                                <div class="feature-item text-center p-3 border rounded">
+                                    <i class="fas fa-bed fa-2x text-primary mb-2"></i>
+                                    <h5 class="mb-0">{{ property.bedrooms }}</h5>
+                                    <small class="text-muted">Bedrooms</small>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="feature-item text-center p-3 border rounded">
+                                    <i class="fas fa-bath fa-2x text-primary mb-2"></i>
+                                    <h5 class="mb-0">{{ property.bathrooms }}</h5>
+                                    <small class="text-muted">Bathrooms</small>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="feature-item text-center p-3 border rounded">
+                                    <i class="fas fa-ruler-combined fa-2x text-primary mb-2"></i>
+                                    <h5 class="mb-0">{{ property.area }}</h5>
+                                    <small class="text-muted">Sq Ft</small>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="feature-item text-center p-3 border rounded">
+                                    <i class="fas fa-car fa-2x text-primary mb-2"></i>
+                                    <h5 class="mb-0">{{ property.garage }}</h5>
+                                    <small class="text-muted">Garage</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Property Description -->
+                    <div class="property-description mb-4">
+                        <h3 class="h4 mb-3">Description</h3>
+                        <p>{{ property.description }}</p>
+                    </div>
+
+                    <!-- Additional Features -->
+                    <div class="additional-features mb-4">
+                        <h3 class="h4 mb-3">Features</h3>
+                        <div class="row g-3">
+                            {% for feature in property.features %}
+                            <div class="col-6 col-md-4">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-check text-success me-2"></i>
+                                    <span>{{ feature }}</span>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Location Map -->
+                    <div class="property-map mb-4">
+                        <h3 class="h4 mb-3">Location</h3>
+                        <div class="map-container">
+                            <iframe width="100%" height="400" frameborder="0" style="border:0"
+                                src="https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q={{ property.location }}"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-12 col-lg-4">
+            <!-- Contact Form -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-envelope me-2"></i>Contact Agent</h5>
+                </div>
+                <div class="card-body">
+                    <form action="{{ url_for('main.contact_agent', property_id=property.id) }}" method="POST">
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Phone</label>
+                            <input type="tel" class="form-control" name="phone">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Message</label>
+                            <textarea class="form-control" name="message" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-paper-plane me-2"></i>Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Agent Info -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-user me-2"></i>Agent Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="{{ property.agent.avatar_url }}" alt="{{ property.agent.name }}"
+                            class="rounded-circle me-3" width="60">
+                        <div>
+                            <h5 class="mb-1">{{ property.agent.name }}</h5>
+                            <p class="text-muted mb-0">{{ property.agent.role }}</p>
+                        </div>
+                    </div>
+                    <div class="agent-contact">
+                        <p class="mb-2">
+                            <i class="fas fa-phone me-2"></i>{{ property.agent.phone }}
+                        </p>
+                        <p class="mb-2">
+                            <i class="fas fa-envelope me-2"></i>{{ property.agent.email }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Similar Properties -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3 class="h4 mb-4">Similar Properties</h3>
+            <div class="row g-4">
+                {% for similar in similar_properties %}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card property-card h-100">
+                        <div class="img-aspect-ratio">
+                            <img src="{{ similar.image_url }}" alt="{{ similar.title }}" class="img-fluid img-lazy"
+                                data-src="{{ similar.image_url }}" loading="lazy">
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title mb-0">{{ similar.title }}</h5>
+                                <span class="badge bg-primary">${{ similar.price }}</span>
+                            </div>
+                            <p class="card-text text-muted">
+                                <i class="fas fa-map-marker-alt me-2"></i>{{ similar.location }}
+                            </p>
+                            <div class="property-features d-flex gap-3 mb-3">
+                                <span><i class="fas fa-bed me-1"></i> {{ similar.bedrooms }} Beds</span>
+                                <span><i class="fas fa-bath me-1"></i> {{ similar.bathrooms }} Baths</span>
+                                <span><i class="fas fa-ruler-combined me-1"></i> {{ similar.area }} sqft</span>
+                            </div>
+                            <a href="{{ url_for('main.property_details', property_id=similar.id) }}"
+                                class="btn btn-outline-primary w-100">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .property-gallery {
+        position: relative;
+    }
+
+    .main-image {
+        width: 100%;
+        height: 500px;
+        overflow: hidden;
+    }
+
+    .main-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .thumbnail-images {
+        display: flex;
+        gap: 10px;
+        padding: 10px;
+        overflow-x: auto;
+    }
+
+    .thumbnail {
+        width: 100px;
+        height: 75px;
+        flex-shrink: 0;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: border-color 0.3s ease;
+    }
+
+    .thumbnail:hover {
+        border-color: var(--primary-color);
+    }
+
+    .thumbnail img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .property-features .feature-item {
+        transition: transform 0.3s ease;
+    }
+
+    .property-features .feature-item:hover {
+        transform: translateY(-5px);
+    }
+
+    .property-card {
+        transition: transform 0.3s ease;
+    }
+
+    .property-card:hover {
+        transform: translateY(-5px);
+    }
+
+    @media (max-width: 768px) {
+        .main-image {
+            height: 300px;
+        }
+    }
+</style>
+
+<script>
+    // Image Gallery
+    document.querySelectorAll('.thumbnail').forEach(thumb => {
+        thumb.addEventListener('click', function () {
+            const mainImage = document.querySelector('.main-image img');
+            const thumbImage = this.querySelector('img');
+            mainImage.src = thumbImage.src;
+
+            // Update active thumbnail
+            document.querySelectorAll('.thumbnail').forEach(t => t.style.borderColor = 'transparent');
+            this.style.borderColor = 'var(--primary-color)';
+        });
+    });
+</script>
+{% endblock %}

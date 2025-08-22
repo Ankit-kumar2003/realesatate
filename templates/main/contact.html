@@ -1,0 +1,281 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Contact Form Section -->
+    <div class="row mb-5">
+        <div class="col-12 col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h4 mb-0"><i class="fas fa-envelope me-2"></i>Contact Us</h2>
+                </div>
+                <div class="card-body">
+                    <form action="{{ url_for('main.contact') }}" method="POST">
+                        <div class="row g-3">
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Name</label>
+                                    <input type="text" class="form-control" name="name" required>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" name="email" required>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="form-label">Subject</label>
+                                    <input type="text" class="form-control" name="subject" required>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="form-label">Message</label>
+                                    <textarea class="form-control" name="message" rows="5" required></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-paper-plane me-2"></i>Send Message
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="h5 mb-0"><i class="fas fa-info-circle me-2"></i>Contact Information</h3>
+                </div>
+                <div class="card-body">
+                    <div class="contact-info">
+                        <p class="mb-3">
+                            <i class="fas fa-map-marker-alt me-2 text-primary"></i>
+                            123 Real Estate Street, City, State 12345
+                        </p>
+                        <p class="mb-3">
+                            <i class="fas fa-phone me-2 text-primary"></i>
+                            (123) 456-7890
+                        </p>
+                        <p class="mb-3">
+                            <i class="fas fa-envelope me-2 text-primary"></i>
+                            info@realestate.com
+                        </p>
+                        <p class="mb-0">
+                            <i class="fas fa-clock me-2 text-primary"></i>
+                            Mon - Fri: 9:00 AM - 6:00 PM
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="h5 mb-0"><i class="fas fa-share-alt me-2"></i>Follow Us</h3>
+                </div>
+                <div class="card-body">
+                    <div class="social-links d-flex gap-3">
+                        <a href="#" class="btn btn-outline-primary">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-primary">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-primary">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-primary">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Office Locations -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="h3 mb-4">Our Office Locations</h2>
+            <div class="row g-4">
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h4 class="h5 mb-3">Main Office</h4>
+                            <p class="mb-2">
+                                <i class="fas fa-map-marker-alt me-2 text-primary"></i>
+                                123 Real Estate Street<br>
+                                City, State 12345
+                            </p>
+                            <p class="mb-2">
+                                <i class="fas fa-phone me-2 text-primary"></i>
+                                (123) 456-7890
+                            </p>
+                            <p class="mb-0">
+                                <i class="fas fa-envelope me-2 text-primary"></i>
+                                main@realestate.com
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h4 class="h5 mb-3">Downtown Office</h4>
+                            <p class="mb-2">
+                                <i class="fas fa-map-marker-alt me-2 text-primary"></i>
+                                456 Business Avenue<br>
+                                City, State 12345
+                            </p>
+                            <p class="mb-2">
+                                <i class="fas fa-phone me-2 text-primary"></i>
+                                (123) 456-7891
+                            </p>
+                            <p class="mb-0">
+                                <i class="fas fa-envelope me-2 text-primary"></i>
+                                downtown@realestate.com
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h4 class="h5 mb-3">Westside Office</h4>
+                            <p class="mb-2">
+                                <i class="fas fa-map-marker-alt me-2 text-primary"></i>
+                                789 West Street<br>
+                                City, State 12345
+                            </p>
+                            <p class="mb-2">
+                                <i class="fas fa-phone me-2 text-primary"></i>
+                                (123) 456-7892
+                            </p>
+                            <p class="mb-0">
+                                <i class="fas fa-envelope me-2 text-primary"></i>
+                                westside@realestate.com
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Members -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="h3 mb-4">Our Team</h2>
+            <div class="row g-4">
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="card team-card h-100 shadow-sm">
+                        <img src="https://via.placeholder.com/300" alt="Team Member" class="card-img-top">
+                        <div class="card-body text-center">
+                            <h4 class="h5 mb-1">John Doe</h4>
+                            <p class="text-muted mb-3">CEO & Founder</p>
+                            <div class="social-links d-flex justify-content-center gap-2">
+                                <a href="#" class="btn btn-sm btn-outline-primary">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                                <a href="#" class="btn btn-sm btn-outline-primary">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add more team members as needed -->
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="row">
+        <div class="col-12">
+            <h2 class="h3 mb-4">Frequently Asked Questions</h2>
+            <div class="accordion" id="faqAccordion">
+                <div class="accordion-item">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                            How do I schedule a property viewing?
+                        </button>
+                    </h3>
+                    <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            You can schedule a property viewing by contacting us through our website, calling our
+                            office, or using the contact form above. Our agents will get back to you within 24 hours to
+                            arrange a convenient viewing time.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faq2">
+                            What documents do I need to rent a property?
+                        </button>
+                    </h3>
+                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            To rent a property, you'll typically need:
+                            <ul>
+                                <li>Proof of income (pay stubs, bank statements)</li>
+                                <li>Photo ID (driver's license or passport)</li>
+                                <li>References from previous landlords</li>
+                                <li>Credit report</li>
+                                <li>Security deposit</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add more FAQ items as needed -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .team-card {
+        transition: transform 0.3s ease;
+    }
+
+    .team-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .team-card img {
+        height: 300px;
+        object-fit: cover;
+    }
+
+    .social-links .btn {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+    }
+
+    .contact-info p {
+        display: flex;
+        align-items: center;
+    }
+
+    .accordion-button:not(.collapsed) {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    .accordion-button:focus {
+        box-shadow: none;
+        border-color: rgba(0, 0, 0, .125);
+    }
+</style>
+{% endblock %}

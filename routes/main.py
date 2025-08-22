@@ -29,7 +29,7 @@ def home():
     if location:
         query = query.filter(Property.location.ilike(f"%{location}%"))
     if property_type:
-        query = query.filter(Property.property_type == property_type)
+        query = query.filter(Property.type == property_type)
     if price_range:
         if price_range == "0-100000":
             query = query.filter(Property.price <= 100000)
@@ -59,7 +59,7 @@ def properties():
     if location:
         query = query.filter(Property.location.ilike(f"%{location}%"))
     if property_type:
-        query = query.filter(Property.property_type == property_type)
+        query = query.filter(Property.type == property_type)
     if price_range:
         if price_range == "0-100000":
             query = query.filter(Property.price <= 100000)
@@ -102,101 +102,24 @@ def contact():
 
 @main_bp.route("/property/<int:property_id>")
 def property_detail(property_id):
-    property = Property.query.get_or_404(property_id)
-    now = datetime.now()
-    return render_template("property_detail.html", property=property, now=now)
+    # Redirect to property blueprint to keep a single source of truth
+    return redirect(url_for("property.view_property", property_id=property_id))
 
 
 @main_bp.route("/property/<int:property_id>/contact", methods=["POST"])
 def contact_agent(property_id):
-    property = Property.query.get_or_404(property_id)
-
-    name = request.form.get("name")
-    email = request.form.get("email")
-    phone = request.form.get("phone")
-    message = request.form.get("message")
-
-    contact = Contact(
-        name=name,
-        email=email,
-        subject=f"Property Inquiry: {property.title}",
-        message=f"Phone: {phone}\n\nMessage:\n{message}",
-    )
-
-    db.session.add(contact)
-    db.session.commit()
-
-    flash(
-        "Your message has been sent to the property owner. They will contact you soon!",
-        "success",
-    )
-    return redirect(url_for("main.property_detail", property_id=property_id))
+    return redirect(url_for("property.view_property", property_id=property_id))
 
 
 @main_bp.route("/add-property", methods=["GET", "POST"])
 @login_required
 def add_property():
-    if request.method == "POST":
-        title = request.form.get("title")
-        description = request.form.get("description")
-        price = float(request.form.get("price"))
-        location = request.form.get("location")
-        property_type = request.form.get("property_type")
-        bedrooms = int(request.form.get("bedrooms"))
-        bathrooms = int(request.form.get("bathrooms"))
-        area = float(request.form.get("area"))
-        image_url = request.form.get("image_url")
-
-        property = Property(
-            title=title,
-            description=description,
-            price=price,
-            location=location,
-            property_type=property_type,
-            bedrooms=bedrooms,
-            bathrooms=bathrooms,
-            area=area,
-            image_url=image_url,
-            user_id=current_user.id,
-        )
-        db.session.add(property)
-        db.session.commit()
-        flash("Property added successfully!", "success")
-        return redirect(url_for("main.properties"))
-    return render_template("add_property.html")
+    return redirect(url_for("property.add_property"))
 
 
 @main_bp.route("/property/<int:property_id>/schedule-viewing", methods=["POST"])
 def schedule_viewing(property_id):
-    property = Property.query.get_or_404(property_id)
-
-    name = request.form.get("name")
-    email = request.form.get("email")
-    phone = request.form.get("phone")
-    preferred_date = datetime.strptime(
-        request.form.get("preferred_date"), "%Y-%m-%d"
-    ).date()
-    preferred_time = request.form.get("preferred_time")
-    message = request.form.get("message", "")
-
-    viewing = PropertyViewing(
-        property_id=property_id,
-        name=name,
-        email=email,
-        phone=phone,
-        preferred_date=preferred_date,
-        preferred_time=preferred_time,
-        message=message,
-    )
-
-    db.session.add(viewing)
-    db.session.commit()
-
-    flash(
-        "Your viewing request has been submitted. The property owner will contact you soon!",
-        "success",
-    )
-    return redirect(url_for("main.property_detail", property_id=property_id))
+    return redirect(url_for("property.view_property", property_id=property_id))
 
 
 @main_bp.route("/dashboard")
@@ -251,7 +174,7 @@ def edit_property(property_id):
         property.description = request.form.get("description")
         property.price = float(request.form.get("price"))
         property.location = request.form.get("location")
-        property.property_type = request.form.get("property_type")
+        property.type = request.form.get("property_type")
         property.bedrooms = int(request.form.get("bedrooms"))
         property.bathrooms = int(request.form.get("bathrooms"))
         property.area = float(request.form.get("area"))

@@ -1,9 +1,8 @@
-from flask_sqlalchemy import SQLAlchemy
+from extensions import db
 from flask_login import UserMixin
-from datetime import datetime
+from datetime import datetime, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
-
-db = SQLAlchemy()
+import secrets
 
 DEFAULT_PROPERTY_IMAGE = "https://via.placeholder.com/400x300?text=No+Image"
 
@@ -14,7 +13,14 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
+    is_verified = db.Column(db.Boolean, default=False)
+    verification_token = db.Column(db.String(100), unique=True)
+    verification_token_expires = db.Column(db.DateTime)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    # OAuth fields
+    google_sub = db.Column(db.String(255), unique=True)
+    avatar_url = db.Column(db.String(500))
+    last_login = db.Column(db.DateTime)
     properties = db.relationship("Property", backref="owner", lazy=True)
 
     def set_password(self, password):
@@ -23,6 +29,11 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
+    def generate_verification_token(self):
+        self.verification_token = secrets.token_urlsafe(32)
+        self.verification_token_expires = datetime.utcnow() + timedelta(hours=24)
+        return self.verification_token
+
 
 class Property(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -30,12 +41,17 @@ class Property(db.Model):
     description = db.Column(db.Text, nullable=False)
     price = db.Column(db.Float, nullable=False)
     location = db.Column(db.String(200), nullable=False)
-    property_type = db.Column(db.String(50), nullable=False)
+    type = db.Column(
+        db.String(50), nullable=False
+    )  # e.g., 'house', 'apartment', 'land'
     bedrooms = db.Column(db.Integer)
     bathrooms = db.Column(db.Integer)
     area = db.Column(db.Float)
     image_url = db.Column(db.String(500), default=DEFAULT_PROPERTY_IMAGE)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(
+        db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow
+    )
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
     @property

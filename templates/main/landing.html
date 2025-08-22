@@ -1,0 +1,239 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section position-relative">
+    <div class="hero-overlay"></div>
+    <div class="container position-relative">
+        <div class="row min-vh-75 align-items-center">
+            <div class="col-12 col-md-8 col-lg-6 text-white">
+                <h1 class="display-4 fw-bold mb-4">Find Your Dream Home</h1>
+                <p class="lead mb-4">Discover the perfect property from our extensive collection of homes, apartments,
+                    and commercial spaces.</p>
+                <div class="d-flex gap-3">
+                    <a href="{{ url_for('main.properties') }}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-search me-2"></i>Browse Properties
+                    </a>
+                    <a href="{{ url_for('main.contact') }}" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-envelope me-2"></i>Contact Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Search Section -->
+<section class="search-section py-5">
+    <div class="container">
+        <div class="card shadow-lg">
+            <div class="card-body p-4">
+                <form action="{{ url_for('main.properties') }}" method="GET" class="row g-3">
+                    <div class="col-12 col-md-4">
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-map-marker-alt me-2"></i>Location</label>
+                            <input type="text" class="form-control" name="location" placeholder="Enter location">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-home me-2"></i>Property Type</label>
+                            <select class="form-select" name="type">
+                                <option value="">All Types</option>
+                                <option value="house">House</option>
+                                <option value="apartment">Apartment</option>
+                                <option value="commercial">Commercial</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-dollar-sign me-2"></i>Price Range</label>
+                            <select class="form-select" name="price_range">
+                                <option value="">Any Price</option>
+                                <option value="0-100000">$0 - $100,000</option>
+                                <option value="100000-300000">$100,000 - $300,000</option>
+                                <option value="300000-500000">$300,000 - $500,000</option>
+                                <option value="500000+">$500,000+</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-search me-2"></i>Search
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Properties -->
+<section class="featured-properties py-5">
+    <div class="container">
+        <h2 class="section-title text-center mb-5">Featured Properties</h2>
+        <div class="row g-4">
+            {% for property in properties %}
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card property-card h-100">
+                    <div class="img-aspect-ratio">
+                        <img src="{{ property.image_url }}" alt="{{ property.title }}" class="img-fluid img-lazy"
+                            data-src="{{ property.image_url }}" loading="lazy">
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title mb-0">{{ property.title }}</h5>
+                            <span class="badge bg-primary">${{ property.price }}</span>
+                        </div>
+                        <p class="card-text text-muted">
+                            <i class="fas fa-map-marker-alt me-2"></i>{{ property.location }}
+                        </p>
+                        <div class="property-features d-flex gap-3 mb-3">
+                            <span><i class="fas fa-bed me-1"></i> {{ property.bedrooms }} Beds</span>
+                            <span><i class="fas fa-bath me-1"></i> {{ property.bathrooms }} Baths</span>
+                            <span><i class="fas fa-ruler-combined me-1"></i> {{ property.area }} sqft</span>
+                        </div>
+                        <a href="{{ url_for('main.property_details', property_id=property.id) }}"
+                            class="btn btn-outline-primary w-100">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="why-choose-us py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title text-center mb-5">Why Choose Us</h2>
+        <div class="row g-4">
+            <div class="col-12 col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-home fa-3x text-primary mb-3"></i>
+                        <h4>Wide Range of Properties</h4>
+                        <p class="text-muted">Find your perfect home from our extensive collection of properties.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-shield-alt fa-3x text-primary mb-3"></i>
+                        <h4>Trusted Platform</h4>
+                        <p class="text-muted">Your security and satisfaction are our top priorities.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-headset fa-3x text-primary mb-3"></i>
+                        <h4>24/7 Support</h4>
+                        <p class="text-muted">Our dedicated team is always here to help you.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials py-5">
+    <div class="container">
+        <h2 class="section-title text-center mb-5">What Our Clients Say</h2>
+        <div class="row g-4">
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="https://via.placeholder.com/50" alt="Client" class="rounded-circle me-3">
+                            <div>
+                                <h5 class="mb-0">John Doe</h5>
+                                <small class="text-muted">Property Buyer</small>
+                            </div>
+                        </div>
+                        <p class="card-text">"Found my dream home through this platform. The process was smooth and
+                            professional."</p>
+                        <div class="text-warning">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Add more testimonials as needed -->
+        </div>
+    </div>
+</section>
+
+<style>
+    .hero-section {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/static/images/hero-bg.jpg');
+        background-size: cover;
+        background-position: center;
+        min-height: 75vh;
+        display: flex;
+        align-items: center;
+    }
+
+    .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    .min-vh-75 {
+        min-height: 75vh;
+    }
+
+    .property-card {
+        transition: transform 0.3s ease;
+    }
+
+    .property-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .property-features {
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+    .section-title {
+        position: relative;
+        padding-bottom: 1rem;
+    }
+
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 3px;
+        background: var(--primary-color);
+    }
+
+    @media (max-width: 768px) {
+        .hero-section {
+            min-height: 50vh;
+        }
+
+        .min-vh-75 {
+            min-height: 50vh;
+        }
+    }
+</style>
+{% endblock %}

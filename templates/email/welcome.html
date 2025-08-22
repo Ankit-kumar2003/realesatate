@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to Real Estate!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #3b82f6;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .content {
+            padding: 20px;
+            background-color: #f9fafb;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #3b82f6;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Welcome to Real Estate!</h1>
+    </div>
+
+    <div class="content">
+        <p>Hello {{ user.name }},</p>
+
+        <p>Thank you for verifying your email address. Your account is now fully activated!</p>
+
+        <p>Here's what you can do now:</p>
+        <ul>
+            <li>Browse available properties</li>
+            <li>Add your own properties for sale or rent</li>
+            <li>Schedule property viewings</li>
+            <li>Contact property owners</li>
+            <li>Manage your property listings</li>
+        </ul>
+
+        <div style="text-align: center;">
+            <a href="{{ url_for('main.home', _external=True) }}" class="button">Start Exploring</a>
+        </div>
+
+        <p>If you have any questions or need assistance, feel free to contact our support team.</p>
+    </div>
+
+    <div class="footer">
+        <p>This is an automated message, please do not reply to this email.</p>
+        <p>&copy; 2024 Real Estate. All rights reserved.</p>
+    </div>
+</body>
+
+</html>

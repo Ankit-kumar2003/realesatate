@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <img src="{{ property.image_url }}" alt="{{ property.title }}" class="w-full h-96 object-cover">
+
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-800 mb-2">{{ property.title }}</h1>
+                        <p class="text-gray-600">{{ property.location }}</p>
+                    </div>
+                    <p class="text-3xl font-bold text-blue-600">${{ "%.2f"|format(property.price) }}</p>
+                </div>
+
+                <div class="border-t border-gray-200 pt-4">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Description</h2>
+                    <p class="text-gray-600 mb-6">{{ property.description }}</p>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                        <div class="bg-gray-50 p-4 rounded">
+                            <p class="text-sm text-gray-500">Type</p>
+                            <p class="font-semibold">{{ property.type }}</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded">
+                            <p class="text-sm text-gray-500">Bedrooms</p>
+                            <p class="font-semibold">{{ property.bedrooms }}</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded">
+                            <p class="text-sm text-gray-500">Bathrooms</p>
+                            <p class="font-semibold">{{ property.bathrooms }}</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded">
+                            <p class="text-sm text-gray-500">Area</p>
+                            <p class="font-semibold">{{ property.area }} sq ft</p>
+                        </div>
+                    </div>
+
+                    {% if current_user.is_authenticated and current_user.id == property.user_id %}
+                    <div class="flex space-x-4">
+                        <a href="{{ url_for('property.edit_property', property_id=property.id) }}"
+                            class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+                            Edit Property
+                        </a>
+                        <form action="{{ url_for('property.delete_property', property_id=property.id) }}" method="POST"
+                            onsubmit="return confirm('Are you sure you want to delete this property?');">
+                            <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
+                                Delete Property
+                            </button>
+                        </form>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
